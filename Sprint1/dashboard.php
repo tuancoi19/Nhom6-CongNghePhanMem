@@ -36,47 +36,75 @@
                     <li class="nav-item">
                         <a class="nav-link" href="index.php?category=home">
                             <i class="nc-icon nc-grid-45"></i>
-                            <span class="nav-item-title">HOME</span>
+                            <span class="nav-item-title">Trang chủ</span>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" data-toggle="collapse" href="#component2">
                             <i class="nc-icon nc-single-02"></i>
-                            <span class="nav-item-title">Accounts<i class="fas fa-caret-down"></i></span>
+                            <span class="nav-item-title">Tài khoản<i class="fas fa-caret-down"></i></span>
                         </a>
+                        
                         <ul class="nav collapse" id="component2">
+                        <?php 
+                            if($_SESSION['user']['lever']==0){
+                        ?>
                             <li class="nav-item nav-child">
                                 <a class="nav-link" href="index.php?category=manageAcc">
                                     <span class="link-name-mini">MP</span>
-                                    <span class="link-name-normal nav-item-title">Manager Accounts</span>
+                                    <span class="link-name-normal nav-item-title">Danh sách tài khoản</span>
                                 </a>
                             </li>
                             <li class="nav-item nav-child">
                                 <a class="nav-link" href="index.php?category=newAccount">
                                     <span class="link-name-mini">AP</span>
-                                    <span class="link-name-normal nav-item-title">Add Accounts</span>
+                                    <span class="link-name-normal nav-item-title">Thêm mới tài khoản</span>
+                                </a>
+                            </li>
+                            <?php } ?>
+                            <li class="nav-item nav-child">
+                                <a class="nav-link" href="#">
+                                    <span class="link-name-mini">ACC</span>
+                                    <span class="link-name-normal nav-item-title">Sửa thông tin cá nhân</span>
                                 </a>
                             </li>
                         </ul>
+                        
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" data-toggle="collapse" href="#component1">
                             <i class="nc-icon nc-single-copy-04"></i>
-                            <span class="nav-item-title">Order<i class="fas fa-caret-down"></i></span>
+                            <span class="nav-item-title">Đơn hàng<i class="fas fa-caret-down"></i></span>
                         </a>
                         <ul class="nav collapse" id="component1">
+                        <?php 
+                            if($_SESSION['user']['lever']!=2){
+                        ?>
                             <li class="nav-item nav-child">
                                 <a class="nav-link" href="index.php?category=manageOrders">
                                     <span class="link-name-mini">MO</span>
-                                    <span class="link-name-normal nav-item-title">Manager Order</span>
+                                    <span class="link-name-normal nav-item-title">Danh sách đơn hàng</span>
                                 </a>
                             </li>
                             <li class="nav-item nav-child">
                                 <a class="nav-link" href="index.php?category=newOrders">
                                     <span class="link-name-mini">AO</span>
-                                    <span class="link-name-normal nav-item-title">Add Order</span>
+                                    <span class="link-name-normal nav-item-title">Tạo mới đơn hàng</span>
                                 </a>
                             </li>
+                        <?php
+                            }
+                         
+                            if($_SESSION['user']['lever']==2){
+                        
+                        ?>
+                            <li class="nav-item nav-child">
+                                <a class="nav-link" href="index.php?category=Orderlist">
+                                    <span class="link-name-mini">OL</span>
+                                    <span class="link-name-normal nav-item-title">Danh sách công việc</span>
+                                </a>
+                            </li>
+                        <?php } ?>
                         </ul>
                     </li>
                 </ul>
@@ -92,10 +120,7 @@
                             </button>
                         </div>
                         <div>
-                            <div class="nav-search w25vw ">
-                                <input type="text" class="form-control" placeholder="Tìm kiếm..." />
-                                <i class="nc-icon nc-zoom-split"></i>
-                            </div>
+                            
                             <div class="users-wrapper">
                                 <div class="users-info">
                                     <span><?php echo $user_name ?></span>
@@ -104,13 +129,13 @@
                                     <li class="nav-item">
                                         <a class="nav-link" href="index.php?category=changepass&id=<?php $user_id=$_SESSION['user']['id'];echo $user_id?>">
                                             <i class="nc-icon nc-refresh-02"></i>
-                                            <span class="link-name-normal">Change Password</span>
+                                            <span class="link-name-normal">Đổi mật khẩu</span>
                                         </a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" href="./admin/logout.php">
                                             <i class="nc-icon nc-button-power"></i>
-                                            <span class="link-name-normal text-danger">Logout</span>
+                                            <span class="link-name-normal text-danger">Đăng xuất</span>
                                         </a>
                                     </li>
                                 </ul>
@@ -144,8 +169,17 @@
                 case "editacc":
                     include('admin/editacc.php');
                     break;
+                case "infoOder":
+                    include('admin/infoOder.php');
+                    break;
+                case "editOder":
+                    include('admin/editOder.php');
+                    break;
                 case "changepass":
                     include('changePassword.php');
+                    break;
+                case "Orderlist":
+                    include('admin/Orderlist.php');
                     break;
                 default:
                     include('admin/home.php');
@@ -154,7 +188,7 @@
             ?>
         </div>
     </div>
-    <script>
+    <!-- <script>
         if ($("#contentPost").length) {
             CKEDITOR.replace('contentPost',
             {
@@ -168,7 +202,7 @@
 
             });
         }
-    </script>
+    </script> -->
     <script src="js/editSubject.js"></script>
     <script src="js/changePass.js"></script>
     <script src="admin/assets/js/script.js"></script>

@@ -16,16 +16,22 @@
 		if(isset($_POST["sbm"])){
 			$mail = $_POST["mail"];
 			$pass = $_POST["pass"];
-			$sql = "SELECT*FROM users where email = '$mail' AND password = '$pass' ";
+			$sql = "SELECT id_thanhvien FROM taikhoan where taikhoan = '$mail' AND matkhau = '$pass' ";
+            echo($sql);
 			$query = mysqli_query($conn,$sql);
 			$num_row = mysqli_num_rows($query); // dem so luong cac ban ghi
 			$row = mysqli_fetch_array($query);
+            $id=$row['id_thanhvien'];
 			if($num_row>0){ // neu co ban ghi
 				$_SESSION["user"]["mail"] = $mail;
 				$_SESSION["user"]["pass"] = $pass;
-                $_SESSION["user"]["lever"] = $row["level"];
-                $_SESSION["user"]["fullname"] = $row["fullname"];
+                $sql="SELECT * from thanhvien where id=$id ";
+                $query = mysqli_query($conn,$sql);
+                $row = mysqli_fetch_array($query);
+                $_SESSION["user"]["lever"] = $row["chucvu"];
+                $_SESSION["user"]["fullname"] = $row["ten"];
                 $_SESSION["user"]["id"]=$row['id'];
+
 				header("location: index.php");
 			}else{
 				$error = '<div class="alert alert-danger">Tài khoản không hợp lệ !</div>';
@@ -51,13 +57,11 @@
                                 <input type="password" name="pass" id="password" class="form-control">
                             </div>
                             <div class="form-group">
-                                <label for="remember-me" class="text-info"><span>Remember me</span> <span><input id="remember-me" name="remember-me" type="checkbox"></span></label><br>
-								<input type="submit" name="sbm" class="btn btn-info btn-md" value="submit">
-								<a class="btn text-info" href="password/reset.php">Forgot Password</a>
+                                
+								<input type="submit" name="sbm" class="btn btn-info btn-md" value="Đăng nhập">
+								
                             </div>
-                            <div id="register-link" class="text-right">
-                                <a href="#" class="text-info">Register here</a>
-                            </div>
+                           
                         </form>
                     </div>
                 </div>

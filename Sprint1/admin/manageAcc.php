@@ -1,7 +1,7 @@
 <div class="user-management col-12 mt-3">
     <div class="card">
         <div class="card-header">
-            <h3 class="text-center">Manager Accounts</h3>
+            <h3 class="text-center">Danh sách thành viên</h3>
             <div class="status-bar mt-3 d-flex">
                 <form>
                     <input type="text" class="textbox" placeholder="Search" />
@@ -16,10 +16,10 @@
                     <thead>
                         <tr>
                             <th scope="col">ID</th>
-                            <th scope="col">Name</th>
+                            <th scope="col">Tên</th>
                             <th scope="col">Email</th>
-                            <th scope="col">Level</th>
-                            <th scope="col">Address</th>
+                            <th scope="col">Địa chỉ</th>
+                            <th scope="col">Chức vụ</th>
                             <th scope="col">Actions</th>
                         </tr>
                     </thead>

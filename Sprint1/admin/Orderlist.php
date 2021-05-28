@@ -1,7 +1,7 @@
 <div class="user-management col-12 mt-3">
     <div class="card">
         <div class="card-header">
-            <h3 class="text-center">Danh sách đơn hàng</h3>
+            <h3 class="text-center">Danh sách công việc</h3>
             <div class="status-bar mt-3 d-flex">
                 <form>
                     <input type="text" class="textbox" placeholder="Search" />
@@ -13,20 +13,20 @@
             </div>
         </div>
         <div class="card-body">
+        <?php 
+            $id=$_SESSION['user']['id'];
+            $sql = "SELECT * FROM donhang where id in(select id_donhang from congviec where id_nvchup=$id) ORDER BY id DESC ";
+            
+            $post = mysqli_query($conn, $sql);
+            if(mysqli_num_rows($post)>0){
+        ?>
             <div class="list-users mt-5 table-responsive">
-                <?php
-                    $id=$_SESSION['user']['id'];
-                    if( $_SESSION['user']['lever']==0) $sql = "SELECT * FROM donhang ORDER BY id DESC";
-                    else  $sql = "SELECT * FROM donhang where id_nvban=$id ORDER BY id DESC";
-                    $post = mysqli_query($conn, $sql);   
-                    if(mysqli_num_rows($post)>0){     
-                ?>
                 <table class="table table-hover text-center" id="showUser">
                     <thead>
                         <tr>
                             <th scope="col">ID</th>
                             <th scope="col">Tên khách hàng</th>
-                            <th scope="col">Người thêm đơn hàng</th>
+                            <th scope="col">Địa chỉ khách hàng</th>
                             <th scope="col">SĐT khách hàng</th>
                             <th scope="col">Trạng thái</th>
                             <th scope="col">Hành động</th>
@@ -34,16 +34,13 @@
                     </thead>
                     <tbody>
                     <?php
+                        
                         while($row = mysqli_fetch_array($post)  ) {
-                            $idsale=$row['id_nvban'];
-                            $sql="SELECT ten from thanhvien where id = $idsale ";
-                            $res=mysqli_query($conn,$sql);
-                            $sale=mysqli_fetch_array($res);
                     ?>
                         <tr>
                             <td><?php echo $row['id']; ?></td>
-                            <td><?php echo $row['ten']; ?></td>
-                            <td><?php $string=$idsale.'-'.$sale['ten'] ;echo($string);?></td>
+                            <td><?php echo $row['ten'];?></td>
+                            <td><?php echo $row['diachi']; ?></td>
                             <td><?php echo $row['dienthoai']; ?></td>
                             <td><?php 
                             if ($row['trangthai']==0) echo("Chưa phân việc");
@@ -60,7 +57,8 @@
                             <?php } ?>
                             </td>
                         </tr>
-                        <?php }} else echo('<div>Chưa có đơn hàng</div>');?>
+                        
+                        <?php }} else echo('<div>Hiện tại bạn chưa có đơn hàng được phân công</div>'); ?>
                     </tbody>
                 </table>
             </div>
